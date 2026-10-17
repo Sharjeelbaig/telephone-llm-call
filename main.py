@@ -13,7 +13,10 @@ def get_db_connection():
     return psycopg2.connect(DATABASE_URL, cursor_factory=RealDictCursor)
 
 if DATABASE_URL:
-    initialize_db(psycopg2, DATABASE_URL)
+    try:
+        initialize_db(psycopg2, DATABASE_URL)
+    except Exception as e:
+        print(f"Warning: Failed to initialize database on startup: {e}")
 
 app = FastAPI(title="Voice AI Patient Registration API", version="1.0.0")
 
