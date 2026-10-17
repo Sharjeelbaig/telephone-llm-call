@@ -1,5 +1,6 @@
 import os
 import uuid
+from fastapi.responses import HTMLResponse
 import psycopg2
 from psycopg2.extras import RealDictCursor
 from datetime import datetime
@@ -226,4 +227,4 @@ def view_dashboard():
             <tbody>{rows_html if rows_html else '<tr><td colspan="7">No patients registered yet. Dial +1 (213) 464 0359 to register a patient!</td></tr>'}</tbody>
         </table>
     """
-    return html_content
+    return HTMLResponse(content=html_content, status_code=200)
