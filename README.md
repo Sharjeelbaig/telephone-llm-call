@@ -45,8 +45,8 @@ DATABASE_URL="postgresql://user:password@ep-xyz.neon.tech/neondb?sslmode=require
 
 1. **Clone the Repository:**
    ```bash
-   git clone <YOUR_REPOSITORY_URL>
-   cd <YOUR_REPOSITORY_DIRECTORY>
+   git clone https://github.com/Sharjeelbaig/telephone-llm-call
+   cd telephone-llm-call
    ```
 
 2. **Install Dependencies:**
@@ -62,7 +62,10 @@ DATABASE_URL="postgresql://user:password@ep-xyz.neon.tech/neondb?sslmode=require
 
 4. **Run Local Server:**
    ```bash
-   uvicorn main:app --reload --port 8000
+   uv sync
+   ```
+   ```bash
+   fastapi run
    ```
 
 5. **Test Health Endpoint:**
