@@ -1,0 +1,17 @@
+[project]
+name = "telephone-llm-call"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Sharjeel Baig", email = "dr.sharjeel.6@gmail.com" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi[standard]>=0.143.3",
+    "pydantic>=2.14.1",
+    "uvicorn>=0.54.0",
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
