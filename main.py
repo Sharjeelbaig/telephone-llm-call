@@ -184,3 +184,46 @@ def delete_patient(patient_id: str):
     conn.close()
 
     return envelope(data={"message": "Soft deleted", "patient_id": patient_id})
+
+@app.get("/dashboard")
+def view_dashboard():
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM patients WHERE deleted_at IS NULL ORDER BY created_at DESC;")
+    patients = cursor.fetchall()
+    conn.close()
+
+    rows_html = ""
+    for p in patients:
+        p_dict = dict(p)
+        rows_html += f"""
+            <tr>
+                <td>{p_dict.get('patient_id', '')}</td>
+                <td><b>{p_dict.get('first_name', '')} {p_dict.get('last_name', '')}</b></td>
+                <td>{p_dict.get('date_of_birth', '')}</td>
+                <td>{p_dict.get('phone_number', '')}</td>
+                <td>{p_dict.get('city', '')}, {p_dict.get('state', '')}</td>
+                <td>{p_dict.get('insurance_provider', 'N/A')}</td>
+                <td>{p_dict.get('created_at', '')}</td>
+            </tr>
+        """
+
+    html_content = f"""
+        <h2>🏥 Voice AI Patient Registration Dashboard</h2>
+        <p>Live view of registered patients stored in NeonDB PostgreSQL.</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Patient ID</th>
+                    <th>Name</th>
+                    <th>DOB</th>
+                    <th>Phone</th>
+                    <th>Location</th>
+                    <th>Insurance</th>
+                    <th>Registered At</th>
+                </tr>
+            </thead>
+            <tbody>{rows_html if rows_html else '<tr><td colspan="7">No patients registered yet. Dial +1 (213) 464 0359 to register a patient!</td></tr>'}</tbody>
+        </table>
+    """
+    return html_content
